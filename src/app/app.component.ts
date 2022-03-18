@@ -2,6 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Form } from '@angular/forms';
 
+interface Cliente{
+  id: number,
+  servico: number,
+  cliente: string,
+  contato: string
+}
+
+enum Servico{
+  'Cabelo',
+  'Barba',
+  'Combo'
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +25,8 @@ export class AppComponent {
   logado: boolean = true;
   form: FormGroup;
   url: string = 'http://lucasreno.kinghost.net/barbearia';
+  fila: Cliente[] = [];
+  servicos: typeof Servico = Servico;
 
   constructor(public fb: FormBuilder, public http: HttpClient){
     this.form = this.fb.group({
@@ -20,6 +35,7 @@ export class AppComponent {
       contato: [''],
       servico: [''],
     });
+    this.pegarDados();
   }
 
   verificarSenha(event: any){
@@ -34,6 +50,23 @@ export class AppComponent {
       },
       (error: any) => {
         console.log(error.error);
+      }
+    );
+  }
+
+  pegarDados(){
+    console.log("Solicitando dados ao backend");
+    this.http.get<Cliente[]>(this.url).subscribe(
+      (resposta: Cliente[]) => {
+        this.fila = resposta;
+      }
+    );
+  }
+
+  removerDaFila(id:number){
+    this.http.patch<any>(this.url, {id}).subscribe(
+      (resposta: any) => {
+        console.log("Finalizado com sucesso")
       }
     );
   }

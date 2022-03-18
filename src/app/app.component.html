@@ -49,4 +49,35 @@
       </form>
     </div>
   </div>
+
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+      <table class="table text-center mt-5">
+        <thead>
+          <tr>
+            <td># Fila</td>
+            <td>Cliente</td>
+            <td>Contato</td>
+            <td>Serviço</td>
+            <td>Finalizar</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of fila; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{item.cliente}}</td>
+            <td>{{item.contato}}</td>
+            <td>{{servicos[item.servico]}}</td>
+            <td>
+              <button mat-raised-button color="primary" 
+                      (click)="removerDaFila(item.id)">
+                Finalizar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
