@@ -27,7 +27,7 @@
           </mat-form-field>
           <mat-form-field class="flex-fill" appearance="fill">
             <mat-label>Contato:</mat-label>
-            <input matInput placeholder="Ex. (15) 98765-4321" formControlName="contato">
+            <input matInput placeholder="Ex. (15) 98765-4321" formControlName="contato" mask="(00) 00000-0000">
           </mat-form-field>
         </div>
 
@@ -41,7 +41,7 @@
         </div>
 
         <div>
-          <button mat-raised-button color="accent" class="w-100 mt-3">
+          <button mat-raised-button color="accent" class="w-100 mt-3" [disabled]="!form.valid">  
             Cadastrar cliente na fila
           </button>
         </div>
@@ -66,7 +66,7 @@
           <tr *ngFor="let item of fila; let i = index">
             <td>{{i+1}}</td>
             <td>{{item.cliente}}</td>
-            <td>{{item.contato}}</td>
+            <td>{{item.contato | mask:'(00) 00000-0000'}}</td>
             <td>{{servicos[item.servico]}}</td>
             <td>
               <button mat-raised-button color="primary" 
